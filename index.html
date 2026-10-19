@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#eef4e9">
+  <meta name="description" content="mahiro-wiki：生活、阅读、技术和旅行的个人博客。">
+  <title>mahiro-wiki</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2345bcb1'/%3E%3Ctext x='13' y='46' font-size='43' font-family='Arial' font-weight='bold' fill='white'%3Em%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#journal">跳到文章</a>
+<main id="home">
+  <section class="orbit-stage" aria-label="mahiro-wiki 首页">
+    <nav class="nav-card frosted" aria-label="主导航">
+      <a class="site-name" href="#home"><span class="site-avatar">m</span><span>mahiro-wiki<small>PERSONAL WIKI</small></span></a>
+      <span class="nav-caption">GENERAL</span>
+      <a href="#journal"><span class="nav-glyph">▤</span>近期文章</a>
+      <a href="#categories"><span class="nav-glyph">▦</span>文章分类</a>
+      <a href="#archive"><span class="nav-glyph">☆</span>翻翻归档</a>
+      <a href="#about"><span class="nav-glyph">☺</span>关于网站</a>
+      <div class="nav-sign">✳ <span>慢慢更新中</span></div>
+    </nav>
+    <div class="collage-card frosted" role="img" aria-label="四张关于山、咖啡、代码和阅读的手绘明信片">
+      <div class="polaroid card-mountain"><span class="drawing">☀<i>▲▲▲</i></span><small>01 / ROAD</small></div>
+      <div class="polaroid card-coffee"><span class="drawing">☕</span><small>02 / BREAK</small></div>
+      <div class="polaroid card-code"><span class="drawing">&lt;/&gt;<i>────<br>───</i></span><small>03 / NOTES</small></div>
+      <div class="polaroid card-book"><span class="drawing">▤<i>✿</i></span><small>04 / READ</small></div>
+    </div>
+    <section class="greeting-card frosted">
+      <div class="greeting-avatar" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="#fff0ac"/><path d="M25 48 28 26 44 37q7-3 14 0l15-11 3 23q9 11 2 25-8 15-27 15T24 73q-8-13 1-25" fill="#fbfaf1" stroke="#d5ccb8" stroke-width="2"/><path d="M38 57q4 6 8 0m12 0q4 6 8 0" fill="none" stroke="#455d54" stroke-width="3" stroke-linecap="round"/><path d="m48 65 4-2 4 2-4 4z" fill="#e69b99"/><path d="m26 63-12-2m12 7-12 2m60-7 12-2m-12 7 12 2" stroke="#909486" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <p id="greeting-time">Good Evening</p>
+      <h1>I'm <span>mahiro</span>,<br>nice to meet you!</h1>
+      <p class="greeting-small">日常、读书，还有一点折腾电脑的记录。</p>
+    </section>
+    <a class="jump-button" href="#journal"><span aria-hidden="true">✎</span> 看文章</a>
+    <section class="clock-card frosted" aria-label="当前时间"><span id="clock">00:00</span></section>
+    <section class="calendar-card frosted"><div class="calendar-heading"><h2 id="clock-date">今天</h2><span>✳</span></div><div class="calendar-grid" id="calendar-grid" aria-label="本月日历"></div><div id="month-label"></div></section>
+    <a class="latest-card frosted" href="#post/slow-morning"><span class="card-label">最新文章</span><span class="latest-content"><span class="latest-icon">✿</span><span><b>把早晨还给自己</b><small>从一杯热茶、几页书开始。</small><time>2026/10/18</time></span></span></a>
+    <div class="social-dots" aria-hidden="true"><span>▣</span><span>✿</span><span>⌘</span></div>
+    <section class="random-card frosted"><span class="card-label">随机推荐</span><a id="random-link" href="#post/slow-morning"><span class="random-icon">✳</span><span><small>点开一篇</small><b id="random-title">把早晨还给自己</b></span><span>↗</span></a></section>
+    <a class="reading-card frosted" href="#post/book-margins"><span class="reading-symbol">♫</span><span><small>正在翻阅</small>书页边，留一点自己的声音</span><span class="round-arrow">↗</span></a>
+    <span class="tiny-heart" aria-hidden="true">♥</span>
+  </section>
+  <div class="below-stage">
+    <section class="journal frosted" id="journal">
+      <div class="section-heading"><div><span class="section-tag">RECENT POSTS</span><h2>近期文章</h2></div><span>下面这些都是示例内容</span></div>
+      <div class="toolbar" id="categories"><div class="filters" role="group" aria-label="文章分类"><button class="active" data-category="全部" aria-pressed="true">全部 <span>06</span></button><button data-category="生活阅读" aria-pressed="false">生活阅读</button><button data-category="技术学习" aria-pressed="false">技术学习</button><button data-category="旅行摄影" aria-pressed="false">旅行摄影</button></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜一搜…" aria-label="搜索文章"></label></div>
+      <p class="result-status" id="result-status" aria-live="polite"></p><div class="articles" id="articles"></div><div class="empty" id="empty" hidden><h3>没有找到</h3><p>换个关键词试试。</p><button id="reset">查看全部文章</button></div>
+    </section>
+    <div class="lower-row"><section class="archive frosted" id="archive"><div class="section-heading"><div><span class="section-tag">ARCHIVE</span><h2>归档</h2></div></div><div id="archive-list"></div></section><section class="about frosted" id="about"><span class="section-tag">ABOUT</span><h2>关于网站</h2><p>这里是 mahiro-wiki。先把想记的东西放进来，再慢慢整理。</p><p>现在的六篇文章是占位示例，等有了自己的文字就换掉。</p><span>updated when there's something to say.</span></section></div>
+    <footer><span>mahiro-wiki © 2026</span><a href="#home">回到上面 ↑</a></footer>
+  </div>
+</main>
+<dialog id="reader" aria-labelledby="reader-title"><div class="reader-toolbar"><span>mahiro-wiki / article</span><button id="close-reader" aria-label="关闭文章">关闭 ✕</button></div><article class="reader-body"><div id="reader-meta"></div><h1 id="reader-title"></h1><p id="reader-intro" class="reader-intro"></p><div id="reader-content"></div><div class="reader-end">— 示例文章 —</div><button id="next-article">读下一篇 ↗</button></article></dialog>
+</body>
+</html>
