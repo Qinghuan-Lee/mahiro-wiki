@@ -18,7 +18,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 
 from build import MARKDOWN, POST_ID, ROOT, split_post, validate_post
-from publishing import article_changes, pending_commits, publish
+from publishing import article_changes, committed_assets, pending_commits, publish
 
 
 POSTS = ROOT / "posts"
@@ -106,7 +106,8 @@ def library():
     posts = []
     changes = article_changes()
     covers = []
-    for path in ASSETS.rglob("*"):
+    for name in committed_assets():
+        path = ROOT / name
         if path.is_file() and path.suffix.lower() in IMAGE_TYPES and path.resolve().is_relative_to(ASSETS):
             covers.append(path.relative_to(ROOT).as_posix())
     for path in sorted(POSTS.glob("*.md")):

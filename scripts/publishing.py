@@ -42,6 +42,11 @@ def pending_commits():
     return int(git("rev-list", "--count", "origin/main..HEAD"))
 
 
+def committed_assets():
+    names = git("ls-tree", "-r", "--name-only", "-z", "HEAD", "--", "assets/")
+    return set(names.rstrip("\0").split("\0")) if names else set()
+
+
 def publish():
     if git("branch", "--show-current") != "main":
         raise ValueError("请切换到 main 分支后发布")
@@ -50,7 +55,10 @@ def publish():
     if not changes and not ahead:
         return "没有待发布的文章改动。"
 
-    collect_posts()
+    assets = committed_assets()
+    for post in collect_posts():
+        if post["cover"] not in assets:
+            raise ValueError(f"请先提交文章「{post['title']}」使用的封面 {post['cover']}")
     added_or_modified = [name for name, status in changes.items() if status == "changed"]
     if added_or_modified:
         git("add", "--intent-to-add", "--", *added_or_modified)
