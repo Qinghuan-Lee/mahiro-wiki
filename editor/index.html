@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eef4e9">
+  <title>文章管理 · mahiro-wiki</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/editor.css">
+  <script src="/editor.js" type="module"></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="masthead">
+      <div class="editor-brand">
+        <span class="site-avatar" aria-hidden="true">m</span>
+        <div><p>mahiro-wiki</p><h1>文章管理</h1></div>
+      </div>
+      <button class="button primary" id="publish" type="button" disabled>发布到网站 ↗</button>
+    </header>
+
+    <div id="status" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <div class="workspace-grid">
+      <aside class="library frosted" aria-labelledby="library-title">
+        <div class="panel-heading">
+          <h2 id="library-title">文章</h2>
+          <button class="button" id="new-post" type="button">＋ 新建</button>
+        </div>
+        <label class="search-label">
+          <span class="visually-hidden">搜索文章</span>
+          <input type="search" id="find" placeholder="搜索文章…">
+        </label>
+        <p id="pending" class="pending"></p>
+        <ul id="library"></ul>
+      </aside>
+
+      <section class="composition frosted" aria-labelledby="editor-title">
+        <div class="panel-heading">
+          <h2 id="editor-title">新文章</h2>
+          <span class="edit-state" id="edit-state"></span>
+        </div>
+        <form id="post-form">
+          <div class="content-fields">
+            <label for="title">标题</label>
+            <input id="title" name="title" class="title-field" placeholder="给文章起个名字" required>
+            <div class="two-fields">
+              <label>分类 <input name="category" list="categories" placeholder="生活阅读" required></label>
+              <label>发布日期 <input name="date" type="date" required></label>
+            </div>
+            <datalist id="categories"></datalist>
+            <label>摘要 <input name="summary" placeholder="留空时使用标题"></label>
+          </div>
+
+          <div class="writing">
+            <div class="writing-heading">
+              <label for="body">正文 <span>Markdown</span></label>
+              <div class="switch" role="group" aria-label="正文视图">
+                <button type="button" id="write-tab" aria-pressed="true">编辑</button>
+                <button type="button" id="preview-tab" aria-pressed="false">预览</button>
+              </div>
+            </div>
+            <textarea name="body" id="body" rows="12" placeholder="从这里开始写…" required></textarea>
+            <div id="preview" class="markdown-preview" hidden></div>
+          </div>
+
+          <details>
+            <summary>链接与封面</summary>
+            <div class="extra-fields">
+              <label>文章链接
+                <span class="link-field"><span>#post/</span><input name="id" maxlength="100" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="自动生成"></span>
+              </label>
+              <label>封面 <select name="cover" id="cover"><option value="">默认插画</option></select></label>
+              <label>阅读时长 <input name="readingTime" placeholder="例如 3 分钟"></label>
+              <img id="cover-preview" src="/assets/covers/desk.svg" alt="封面预览" width="112" height="70">
+            </div>
+          </details>
+
+          <footer class="form-footer">
+            <button class="button danger" id="delete-post" type="button" hidden>删除文章</button>
+            <button class="button primary save" type="submit">保存到本地</button>
+          </footer>
+        </form>
+      </section>
+    </div>
+  </main>
+  <dialog id="confirm" class="frosted">
+    <form method="dialog">
+      <h2 id="confirm-title"></h2>
+      <p id="confirm-description"></p>
+      <div class="confirm-actions">
+        <button class="button" value="cancel" autofocus>取消</button>
+        <button class="button primary" id="confirm-action" value="confirm">确认</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
