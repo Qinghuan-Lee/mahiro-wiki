@@ -1,22 +1,20 @@
-    <div class="toolbar" id="categories" tabindex="-1">
-      <div class="filters" role="group" aria-label="文章分类"></div>
-      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜一搜…" aria-label="搜索文章"></label>
+    <div class="index-controls" id="categories" tabindex="-1">
+      <div class="choice-row" id="group-posts" role="group" aria-label="文章分组">
+        <button type="button" data-group="year" aria-pressed="true">按年</button>
+        <button type="button" data-group="month" aria-pressed="false">按月</button>
+        <button type="button" data-group="week" aria-pressed="false">按周</button>
+        <button type="button" data-group="day" aria-pressed="false">按日</button>
+        <button type="button" data-group="category" aria-pressed="false">分类</button>
+      </div>
+      <input class="module-search" id="search" type="search" placeholder="搜索文章" aria-label="搜索文章">
+      <label id="category-field" hidden>分类 <select id="article-category"><option value="">全部</option></select></label>
     </div>
-    <p class="result-status" id="result-status" aria-live="polite"></p>
-    <div class="articles" id="articles"></div>
-    <div class="empty" id="empty" hidden>
-      <h2>没有找到</h2>
-      <p>换个关键词试试。</p>
-      <button id="reset">查看全部文章</button>
-    </div>
+    <div id="articles"></div>
+    <p class="module-empty" id="empty" role="status" hidden>没有找到文章。 <button type="button" id="reset">清除筛选</button></p>
     <template id="article-template">
-      <article class="article">
-        <a>
-          <div class="cover"><img alt="" loading="lazy"><span class="cover-label"></span></div>
-          <div class="article-meta"><time></time><span class="example-label"> · 示例文章</span></div>
-          <h2></h2>
-          <p></p>
-          <div class="article-bottom"><span class="reading-time"></span><span aria-hidden="true">↗</span></div>
-        </a>
-      </article>
+      <li class="post-index-row">
+        <time></time>
+        <a></a>
+        <span class="post-category"></span>
+      </li>
     </template>

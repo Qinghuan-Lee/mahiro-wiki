@@ -7,23 +7,21 @@
   <title>$title · mahiro-wiki</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modules.css">
   $script
 </head>
-<body>
-<div class="module-page">
+<body class="module-body">
   <a class="skip" href="#content">跳到正文</a>
-  <nav class="module-nav frosted" aria-label="主导航">
-    <a class="site-name" href="./"><span class="site-avatar">m</span>mahiro-wiki</a>
+  <nav class="module-nav" aria-label="主导航">
+    <a class="module-brand" href="./" aria-label="mahiro-wiki 首页"><img src="assets/favicon.svg" width="34" height="34" alt="">mahiro-wiki</a>
     <div class="module-links">
       $navigation
     </div>
   </nav>
-  <main class="module-panel frosted" id="content" tabindex="-1">
+  <main class="module-page module-$module" id="content" tabindex="-1">
     <h1>$title</h1>
     $content
   </main>
-  <footer><span>mahiro-wiki © 2026</span><a href="./">返回首页</a></footer>
-</div>
 $reader
 </body>
 </html>

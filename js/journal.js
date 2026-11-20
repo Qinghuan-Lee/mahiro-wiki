@@ -1,87 +1,120 @@
 import { postLink } from './post-links.js';
 
-function articleCard(template, post) {
-  const card = template.content.firstElementChild.cloneNode(true);
-  card.querySelector('a').href = postLink(post);
-  card.querySelector('img').setAttribute('src', post.cover);
-  card.querySelector('.cover-label').textContent = post.category;
-  card.querySelector('.example-label').hidden = !post.example;
-  card.querySelector('h2').textContent = post.title;
-  card.querySelector('p').textContent = post.summary;
+const groupLabel = {
+  year: post => `${post.date.slice(0, 4)} 年`,
+  month: post => `${post.date.slice(0, 7).replace('-', ' 年 ')} 月`,
+  week: post => {
+    const monday = new Date(post.date);
+    monday.setUTCDate(monday.getUTCDate() - (monday.getUTCDay() + 6) % 7);
+    return `${monday.toISOString().slice(0, 10)} 开始的一周`;
+  },
+  day: post => post.date,
+  category: post => post.category,
+};
 
-  const date = card.querySelector('time');
-  date.dateTime = post.date;
-  date.textContent = post.date.replaceAll('-', '.');
-
-  if (post.readingTime) {
-    card.querySelector('.reading-time').textContent = `阅读约 ${post.readingTime}`;
-  }
-  return card;
-}
-
-function archiveRow(template, post) {
-  const row = template.content.firstElementChild.cloneNode(true);
-  row.href = postLink(post);
-  row.querySelector('.archive-title').textContent = post.title;
-  row.querySelector('.archive-category').textContent = post.category;
+function setPostRow(row, post, dateLabel) {
   const date = row.querySelector('time');
+  const link = row.querySelector('a');
   date.dateTime = post.date;
-  date.textContent = post.date.slice(5).replace('-', ' / ');
-  return row;
+  date.textContent = dateLabel;
+  link.href = postLink(post);
+  link.textContent = post.title;
 }
 
-function setupFilters(posts) {
-  const grid = document.querySelector('#articles');
-  const filters = document.querySelector('.filters');
+function setupArticleIndex(posts) {
+  const index = document.querySelector('#articles');
+  const buttons = [...document.querySelectorAll('#group-posts button')];
+  const categoryField = document.querySelector('#category-field');
+  const categories = document.querySelector('#article-category');
   const search = document.querySelector('#search');
   const empty = document.querySelector('#empty');
-  const status = document.querySelector('#result-status');
   const template = document.querySelector('#article-template');
-  const categories = new Set(posts.map(post => post.category));
-  let selectedCategory = null;
+  let grouping = location.hash === '#categories' ? 'category' : 'year';
 
-  const buttons = [null, ...categories].map(category => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = category ?? '全部';
-    if (category === null) {
-      const count = document.createElement('span');
-      count.textContent = ` ${String(posts.length).padStart(2, '0')}`;
-      button.append(count);
-    }
-    button.addEventListener('click', () => {
-      selectedCategory = category;
-      render();
-    });
-    filters.append(button);
-    return { category, button };
-  });
+  for (const category of new Set(posts.map(post => post.category))) {
+    categories.add(new Option(category, category));
+  }
 
   function render() {
     const term = search.value.trim().toLowerCase();
-    const visiblePosts = posts.filter(post => {
-      const matchesCategory = selectedCategory === null || post.category === selectedCategory;
-      return matchesCategory && post.searchText.includes(term);
-    });
+    const groups = new Map();
+    for (const post of posts) {
+      if (!post.searchText.includes(term)) continue;
+      if (grouping === 'category' && categories.value && categories.value !== post.category) continue;
 
-    grid.replaceChildren(...visiblePosts.map(post => articleCard(template, post)));
-    empty.hidden = visiblePosts.length > 0;
-    status.textContent = `共 ${visiblePosts.length} 篇文章`;
-    for (const { category, button } of buttons) {
-      const selected = category === selectedCategory;
-      button.classList.toggle('active', selected);
-      button.setAttribute('aria-pressed', String(selected));
+      const label = groupLabel[grouping](post);
+      if (!groups.has(label)) groups.set(label, []);
+      groups.get(label).push(post);
+    }
+
+    const sections = [];
+    for (const [label, entries] of groups) {
+      const section = document.createElement('section');
+      section.className = 'post-index-group';
+      const heading = document.createElement('h2');
+      heading.textContent = label;
+      const count = document.createElement('span');
+      count.textContent = `${entries.length} 篇`;
+      heading.append(count);
+      const list = document.createElement('ul');
+      for (const post of entries) {
+        const row = template.content.firstElementChild.cloneNode(true);
+        const category = row.querySelector('.post-category');
+        setPostRow(row, post, grouping === 'category' ? post.date : post.date.slice(5));
+        category.textContent = post.category;
+        list.append(row);
+      }
+      section.append(heading, list);
+      sections.push(section);
+    }
+
+    index.replaceChildren(...sections);
+    categoryField.hidden = grouping !== 'category';
+    empty.hidden = groups.size > 0;
+    for (const button of buttons) {
+      button.setAttribute('aria-pressed', String(button.dataset.group === grouping));
     }
   }
 
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      grouping = button.dataset.group;
+      render();
+    });
+  }
   search.addEventListener('input', render);
+  categories.addEventListener('change', render);
   document.querySelector('#reset').addEventListener('click', () => {
-    selectedCategory = null;
+    categories.value = '';
     search.value = '';
     render();
     search.focus();
   });
   render();
+}
+
+function setupTimeline(posts, list) {
+  const pageSize = 5;
+  const pageCount = Math.max(1, Math.ceil(posts.length / pageSize));
+  const requestedPage = Number(new URLSearchParams(location.search).get('page'));
+  const page = Number.isInteger(requestedPage) ? Math.max(1, Math.min(requestedPage, pageCount)) : 1;
+  const template = document.querySelector('#archive-template');
+  const start = (page - 1) * pageSize;
+  for (const post of posts.slice(start, start + pageSize)) {
+    const row = template.content.firstElementChild.cloneNode(true);
+    setPostRow(row, post, post.date.replaceAll('-', '.'));
+    row.querySelector('p').textContent = post.category;
+    list.append(row);
+  }
+
+  document.querySelector('#archive-empty').hidden = posts.length > 0;
+  document.querySelector('.pagination').hidden = pageCount < 2;
+  document.querySelector('#page-number').textContent = `${page} / ${pageCount}`;
+
+  const previous = document.querySelector('#previous-page');
+  const next = document.querySelector('#next-page');
+  if (page > 1) previous.href = page === 2 ? 'archive.html#writing-heading' : `?page=${page - 1}#writing-heading`;
+  if (page < pageCount) next.href = `?page=${page + 1}#writing-heading`;
 }
 
 function setupHighlights(posts) {
@@ -122,10 +155,7 @@ function setupHighlights(posts) {
 
 export function setupJournal(posts) {
   const archive = document.querySelector('#archive-list');
-  if (archive) {
-    const template = document.querySelector('#archive-template');
-    archive.replaceChildren(...posts.map(post => archiveRow(template, post)));
-  }
-  if (document.querySelector('#articles')) setupFilters(posts);
+  if (archive) setupTimeline(posts, archive);
+  if (document.querySelector('#articles')) setupArticleIndex(posts);
   if (document.querySelector('#latest-post')) setupHighlights(posts);
 }

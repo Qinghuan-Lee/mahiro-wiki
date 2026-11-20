@@ -1,9 +1,24 @@
-    <div id="archive-list"></div>
+    <section class="site-history" aria-labelledby="site-history-heading">
+      <h2 id="site-history-heading">建站记录</h2>
+      <ol class="timeline">
+        <li><time datetime="2026-11-20">2026.11.20</time><div><p>加入 Markdown 发布和本地文章编辑器。</p></div></li>
+        <li><time datetime="2026-10-20">2026.10.20</time><div><p>在仓库中配置域名 mahiro-wiki.cn。</p></div></li>
+        <li><time datetime="2026-10-19">2026.10.19</time><div><p>mahiro-wiki 首次提交。</p></div></li>
+      </ol>
+    </section>
+    <section aria-labelledby="writing-heading">
+      <h2 id="writing-heading">文章记录</h2>
+      <ol class="timeline" id="archive-list"></ol>
+      <p class="module-empty" id="archive-empty" hidden>暂无文章。</p>
+      <nav class="pagination" aria-label="文章记录分页" hidden>
+        <a id="previous-page" rel="prev">← 上一页</a>
+        <span id="page-number"></span>
+        <a id="next-page" rel="next">下一页 →</a>
+      </nav>
+    </section>
     <template id="archive-template">
-      <a class="archive-row">
-        <time class="archive-date"></time>
-        <span class="archive-title"></span>
-        <span class="archive-category"></span>
-        <span aria-hidden="true">↗</span>
-      </a>
+      <li>
+        <time></time>
+        <div><a></a><p></p></div>
+      </li>
     </template>

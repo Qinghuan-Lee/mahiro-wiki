@@ -1,0 +1,15 @@
+    <div class="index-controls" data-directory-controls>
+      <input class="module-search" type="search" placeholder="搜索资源" aria-label="搜索资源">
+      <div class="choice-row" role="group" aria-label="资源分类">
+        <button type="button" data-filter="" aria-pressed="true">全部</button>
+        <button type="button" data-filter="web" aria-pressed="false">网页</button>
+        <button type="button" data-filter="writing" aria-pressed="false">写作</button>
+        <button type="button" data-filter="publishing" aria-pressed="false">发布</button>
+      </div>
+    </div>
+    <ul class="directory-grid">
+      <li data-kind="web"><a href="https://developer.mozilla.org/zh-CN/docs/Learn_web_development"><strong>MDN Web 开发教程</strong><span>developer.mozilla.org · 网页</span><p>从 HTML、CSS 和 JavaScript 开始做自己的网页。</p></a></li>
+      <li data-kind="writing"><a href="https://commonmark.org/help/"><strong>CommonMark</strong><span>commonmark.org · 写作</span><p>写 Markdown 时查链接、图片、列表和代码块的格式。</p></a></li>
+      <li data-kind="publishing"><a href="https://docs.github.com/zh/pages"><strong>GitHub Pages 文档</strong><span>docs.github.com · 发布</span><p>把仓库发布成网站，以及设置自定义域名的方法。</p></a></li>
+    </ul>
+    <p class="module-empty" role="status" hidden>没有找到资源。</p>

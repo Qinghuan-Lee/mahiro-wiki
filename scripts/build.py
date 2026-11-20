@@ -15,9 +15,11 @@ ROOT = Path(__file__).resolve().parent.parent
 PAGES = ROOT / "pages"
 MODULES = (
     ("articles", "近期文章"),
-    ("archive", "归档"),
     ("projects", "我的项目"),
     ("about", "关于网站"),
+    ("share", "推荐分享"),
+    ("blogs", "优秀博客"),
+    ("archive", "时间线"),
 )
 MARKDOWN = MarkdownIt("commonmark", {"html": False})
 POST_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
@@ -114,11 +116,17 @@ def build_pages(output):
 
         filename = f"{module}.html"
         has_articles = module in {"articles", "archive"}
+        script = ""
+        if has_articles:
+            script = "main.js"
+        elif module in {"share", "blogs"}:
+            script = "directory.js"
         page = layout.substitute(
+            module=module,
             title=title,
             navigation="\n      ".join(links),
             content=(PAGES / filename).read_text(encoding="utf-8").rstrip(),
-            script='<script type="module" src="js/main.js"></script>' if has_articles else "",
+            script=f'<script type="module" src="js/{script}"></script>' if script else "",
             reader=reader if has_articles else "",
         )
         (output / filename).write_text(page, encoding="utf-8")
@@ -132,7 +140,7 @@ def build():
     output = ROOT / "dist"
     output.mkdir(exist_ok=True)
     build_pages(output)
-    site_files = ["style.css"]
+    site_files = ["style.css", "modules.css"]
     if (ROOT / "CNAME").is_file():
         site_files.append("CNAME")
     for filename in site_files:
