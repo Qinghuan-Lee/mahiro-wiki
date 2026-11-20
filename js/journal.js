@@ -6,7 +6,7 @@ function articleCard(template, post) {
   card.querySelector('img').setAttribute('src', post.cover);
   card.querySelector('.cover-label').textContent = post.category;
   card.querySelector('.example-label').hidden = !post.example;
-  card.querySelector('h3').textContent = post.title;
+  card.querySelector('h2').textContent = post.title;
   card.querySelector('p').textContent = post.summary;
 
   const date = card.querySelector('time');
@@ -122,8 +122,10 @@ function setupHighlights(posts) {
 
 export function setupJournal(posts) {
   const archive = document.querySelector('#archive-list');
-  const template = document.querySelector('#archive-template');
-  archive.replaceChildren(...posts.map(post => archiveRow(template, post)));
-  setupFilters(posts);
-  setupHighlights(posts);
+  if (archive) {
+    const template = document.querySelector('#archive-template');
+    archive.replaceChildren(...posts.map(post => archiveRow(template, post)));
+  }
+  if (document.querySelector('#articles')) setupFilters(posts);
+  if (document.querySelector('#latest-post')) setupHighlights(posts);
 }

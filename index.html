@@ -6,21 +6,22 @@
   <meta name="theme-color" content="#eef4e9">
   <meta name="description" content="mahiro-wiki：生活、阅读、技术和旅行的个人博客。">
   <title>mahiro-wiki</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2345bcb1'/%3E%3Ctext x='13' y='46' font-size='43' font-family='Arial' font-weight='bold' fill='white'%3Em%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
-<a class="skip" href="#journal">跳到文章</a>
+<a class="skip" href="articles.html">查看近期文章</a>
 <main id="home">
   <section class="orbit-stage" aria-label="mahiro-wiki 首页">
     <nav class="nav-card frosted" aria-label="主导航">
-      <a class="site-name" href="#home"><span class="site-avatar">m</span><span>mahiro-wiki<small>PERSONAL WIKI</small></span></a>
+      <a class="site-name" href="./" aria-current="page"><span class="site-avatar">m</span><span>mahiro-wiki<small>PERSONAL WIKI</small></span></a>
       <span class="nav-caption">GENERAL</span>
-      <a href="#journal"><span class="nav-glyph">▤</span>近期文章</a>
-      <a href="#categories"><span class="nav-glyph">▦</span>文章分类</a>
-      <a href="#archive"><span class="nav-glyph">☆</span>翻翻归档</a>
-      <a href="#about"><span class="nav-glyph">☺</span>关于网站</a>
+      <a href="articles.html"><span class="nav-glyph" aria-hidden="true">▤</span>近期文章</a>
+      <a href="articles.html#categories"><span class="nav-glyph" aria-hidden="true">▦</span>文章分类</a>
+      <a href="archive.html"><span class="nav-glyph" aria-hidden="true">☆</span>翻翻归档</a>
+      <a href="projects.html"><span class="nav-glyph" aria-hidden="true">⌘</span>我的项目</a>
+      <a href="about.html"><span class="nav-glyph" aria-hidden="true">☺</span>关于网站</a>
       <div class="nav-sign">✳ <span>慢慢更新中</span></div>
     </nav>
     <div class="collage-card frosted" role="img" aria-label="四张关于山、咖啡、代码和阅读的手绘明信片">
@@ -37,7 +38,7 @@
       <h1>I'm <span>mahiro</span>,<br>nice to meet you!</h1>
       <p class="greeting-small">日常、读书，还有一点折腾电脑的记录。</p>
     </section>
-    <a class="jump-button" href="#journal"><span aria-hidden="true">✎</span> 看文章</a>
+    <a class="jump-button" href="articles.html"><span aria-hidden="true">✎</span> 看文章</a>
     <section class="clock-card frosted" aria-label="当前时间"><span id="clock">00:00</span></section>
     <section class="calendar-card frosted"><div class="calendar-heading"><h2 id="clock-date">今天</h2><span>✳</span></div><div class="calendar-grid" id="calendar-grid" aria-label="本月日历"></div><div id="month-label"></div></section>
     <a class="latest-card frosted" id="latest-post" hidden><span class="card-label">最新文章</span><span class="latest-content"><span class="latest-icon">✿</span><span><b></b><small></small><time></time></span></span></a>
@@ -46,37 +47,8 @@
     <a class="reading-card frosted" id="featured-post" hidden><span class="reading-symbol">♫</span><span><small>正在翻阅</small><span id="featured-title"></span></span><span class="round-arrow">↗</span></a>
     <span class="tiny-heart" aria-hidden="true">♥</span>
   </section>
-  <div class="below-stage">
-    <section class="journal frosted" id="journal">
-      <div class="section-heading"><div><span class="section-tag">RECENT POSTS</span><h2>近期文章</h2></div></div>
-      <div class="toolbar" id="categories"><div class="filters" role="group" aria-label="文章分类"></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜一搜…" aria-label="搜索文章"></label></div>
-      <p class="result-status" id="result-status" aria-live="polite"></p><div class="articles" id="articles"></div><div class="empty" id="empty" hidden><h3>没有找到</h3><p>换个关键词试试。</p><button id="reset">查看全部文章</button></div>
-    </section>
-    <div class="lower-row"><section class="archive frosted" id="archive"><div class="section-heading"><div><span class="section-tag">ARCHIVE</span><h2>归档</h2></div></div><div id="archive-list"></div></section><section class="about frosted" id="about"><span class="section-tag">ABOUT</span><h2>关于网站</h2><p>这里是 mahiro-wiki。先把想记的东西放进来，再慢慢整理。</p><span>updated when there's something to say.</span></section></div>
-    <footer><span>mahiro-wiki © 2026</span><a href="#home">回到上面 ↑</a></footer>
-  </div>
 </main>
-<dialog id="reader" aria-labelledby="reader-title"><div class="reader-toolbar"><span>mahiro-wiki / article</span><button id="close-reader" aria-label="关闭文章">关闭 ✕</button></div><article class="reader-body"><div id="reader-meta"></div><h1 id="reader-title"></h1><p id="reader-intro" class="reader-intro"></p><div id="reader-content"></div><div class="reader-end">—</div><button id="next-article">读下一篇 ↗</button></article></dialog>
-
-<template id="article-template">
-  <article class="article">
-    <a>
-      <div class="cover"><img alt="" loading="lazy"><span class="cover-label"></span></div>
-      <div class="article-meta"><time></time><span class="example-label"> · 示例文章</span></div>
-      <h3></h3>
-      <p></p>
-      <div class="article-bottom"><span class="reading-time"></span><span aria-label="阅读全文">↗</span></div>
-    </a>
-  </article>
-</template>
-
-<template id="archive-template">
-  <a class="archive-row">
-    <time class="archive-date"></time>
-    <span class="archive-title"></span>
-    <span class="archive-category"></span>
-    <span aria-hidden="true">↗</span>
-  </a>
-</template>
+<footer class="home-footer"><span>mahiro-wiki © 2026</span><a href="#home">回到上面 ↑</a></footer>
+<!-- article-reader -->
 </body>
 </html>

@@ -10,8 +10,9 @@ export function setupReader(posts) {
   const siteTitle = document.title;
   let nextPost;
   let previousFocus;
+  let previousHash = '';
 
-  function renderFromHash() {
+  function renderFromHash(event) {
     const hash = location.hash;
     const postId = hash.startsWith(postHashPrefix) ? hash.slice(postHashPrefix.length) : null;
     const postIndex = posts.findIndex(post => post.id === postId);
@@ -36,6 +37,8 @@ export function setupReader(posts) {
 
     if (!reader.open) {
       previousFocus = document.activeElement;
+      const oldHash = event ? new URL(event.oldURL).hash : '';
+      previousHash = oldHash.startsWith(postHashPrefix) ? '' : oldHash;
       reader.showModal();
       document.body.classList.add('modal-open');
     }
@@ -43,7 +46,7 @@ export function setupReader(posts) {
   }
 
   function closeReader() {
-    history.replaceState(null, '', '#journal');
+    history.replaceState(history.state, '', location.pathname + location.search + previousHash);
     reader.close();
   }
 

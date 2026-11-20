@@ -5,12 +5,20 @@ import re
 from datetime import date
 from pathlib import Path
 from shutil import copy2, copytree
+from string import Template
 
 import yaml
 from markdown_it import MarkdownIt
 
 
 ROOT = Path(__file__).resolve().parent.parent
+PAGES = ROOT / "pages"
+MODULES = (
+    ("articles", "近期文章"),
+    ("archive", "归档"),
+    ("projects", "我的项目"),
+    ("about", "关于网站"),
+)
 MARKDOWN = MarkdownIt("commonmark", {"html": False})
 POST_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 
@@ -92,6 +100,30 @@ def collect_posts():
     return sorted(posts, key=lambda post: post["date"], reverse=True)
 
 
+def build_pages(output):
+    reader = (PAGES / "reader.html").read_text(encoding="utf-8")
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    (output / "index.html").write_text(home.replace("<!-- article-reader -->", reader), encoding="utf-8")
+
+    layout = Template((PAGES / "module.html").read_text(encoding="utf-8"))
+    for module, title in MODULES:
+        links = []
+        for destination, label in MODULES:
+            current = ' aria-current="page"' if destination == module else ""
+            links.append(f'<a href="{destination}.html"{current}>{label}</a>')
+
+        filename = f"{module}.html"
+        has_articles = module in {"articles", "archive"}
+        page = layout.substitute(
+            title=title,
+            navigation="\n      ".join(links),
+            content=(PAGES / filename).read_text(encoding="utf-8").rstrip(),
+            script='<script type="module" src="js/main.js"></script>' if has_articles else "",
+            reader=reader if has_articles else "",
+        )
+        (output / filename).write_text(page, encoding="utf-8")
+
+
 def build():
     try:
         posts = collect_posts()
@@ -99,7 +131,8 @@ def build():
         raise SystemExit(str(error)) from error
     output = ROOT / "dist"
     output.mkdir(exist_ok=True)
-    site_files = ["index.html", "style.css"]
+    build_pages(output)
+    site_files = ["style.css"]
     if (ROOT / "CNAME").is_file():
         site_files.append("CNAME")
     for filename in site_files:

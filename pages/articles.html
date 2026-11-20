@@ -1,0 +1,22 @@
+    <div class="toolbar" id="categories" tabindex="-1">
+      <div class="filters" role="group" aria-label="文章分类"></div>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜一搜…" aria-label="搜索文章"></label>
+    </div>
+    <p class="result-status" id="result-status" aria-live="polite"></p>
+    <div class="articles" id="articles"></div>
+    <div class="empty" id="empty" hidden>
+      <h2>没有找到</h2>
+      <p>换个关键词试试。</p>
+      <button id="reset">查看全部文章</button>
+    </div>
+    <template id="article-template">
+      <article class="article">
+        <a>
+          <div class="cover"><img alt="" loading="lazy"><span class="cover-label"></span></div>
+          <div class="article-meta"><time></time><span class="example-label"> · 示例文章</span></div>
+          <h2></h2>
+          <p></p>
+          <div class="article-bottom"><span class="reading-time"></span><span aria-hidden="true">↗</span></div>
+        </a>
+      </article>
+    </template>

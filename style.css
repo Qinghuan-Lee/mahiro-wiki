@@ -118,12 +118,18 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .reading-symbol { color: #50c9c0; font-size: 24px; }
 .round-arrow { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%; margin-left: auto; background: #fff; color: #43b7ad; font-size: 18px; }
 .tiny-heart { right: 21%; top: 890px; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: #f3a7b7; background: #ffffff8a; font-size: 22px; }
-.below-stage { max-width: 1110px; margin: 0 auto; padding: 0 20px 55px; }
-.journal, .archive, .about { padding: 25px 28px; scroll-margin-top: 26px; }
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
-.section-tag { font: 10px monospace; letter-spacing: 2px; color: #8aa4a1; }
-.section-heading h2, .about h2 { margin: 7px 0 0; font-size: 21px; font-weight: 600; }
-.section-heading > span { font-size: 11px; color: #a2aeab; }
+.module-page, .home-footer { max-width: 1110px; margin: 0 auto; padding: 0 20px 40px; }
+.module-page { padding-top: 36px; }
+.module-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-radius: 25px; }
+.module-nav .site-name { margin: 0; }
+.module-links { display: flex; flex-wrap: wrap; gap: 4px; }
+.module-links a { padding: 8px 12px; border-radius: 18px; }
+.module-links a:hover, .module-links a[aria-current="page"] { background: #fff9; color: #28776c; }
+.module-panel { margin-top: 20px; padding: 25px 28px; }
+.module-panel > h1 { margin: 0 0 18px; font-size: 25px; font-weight: 600; }
+.project-card { max-width: 490px; padding: 18px 20px; border: 1px solid var(--edge); border-radius: 18px; background: #ffffff69; }
+.project-card h2 { margin: 0; font-size: 18px; }
+.project-card a { color: #28776c; text-decoration: underline; text-underline-offset: 3px; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 24px 0 7px; padding-bottom: 13px; border-bottom: 1px solid #ffffffbc; }
 .filters { display: flex; flex-wrap: wrap; gap: 7px; }
 .filters button, .empty button { border: 1px solid #ffffffba; border-radius: 18px; padding: 7px 12px; background: #ffffff6b; color: #718e8b; font-size: 11px; }
@@ -140,20 +146,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .cover img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .cover-label { display: none; }
 .article-meta { display: flex; gap: 7px; color: #a3b1ab; font-size: 9px; align-self: end; }
-.article h3 { margin: 4px 0 0; font-size: 14px; font-weight: 600; }
+.article h2 { margin: 4px 0 0; font-size: 14px; font-weight: 600; }
 .article p { margin: 2px 0 0; color: #869e99; font-size: 10px; }
 .article-bottom { display: flex; justify-content: space-between; align-self: end; color: #9aadaa; font-size: 9px; }
 .article-bottom span:last-child { color: #4dbbae; font-size: 17px; }
 .empty { padding: 30px 0; text-align: center; color: #78908b; }
-.empty h3 { font-weight: 500; }
-.lower-row { display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; margin-top: 18px; }
+.empty h2 { font-size: 18px; font-weight: 500; }
 .archive-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid #ffffffa8; font-size: 12px; }
 .archive-row:last-child { border: 0; }
 .archive-date { min-width: 52px; color: #a0b2af; font-size: 10px; }
 .archive-title { flex: 1; }
 .archive-category { color: #9baea7; font-size: 9px; }
-.about p { color: #75918b; font-size: 12px; line-height: 1.9; }
-.about > span:last-child { display: block; margin-top: 27px; color: #aabcb2; font: 10px monospace; }
 footer { display: flex; justify-content: space-between; padding: 24px 8px 0; color: #8eaaa2; font-size: 11px; }
 dialog { padding: 0; width: calc(100% - 32px); max-width: 690px; max-height: 90vh; color: var(--ink); background: #f7f9f4; border: 1px solid #fff; border-radius: 24px; box-shadow: 0 20px 90px #34584f50; }
 dialog::backdrop { background: #3a61547f; backdrop-filter: blur(5px); }
@@ -211,10 +214,10 @@ dialog::backdrop { background: #3a61547f; backdrop-filter: blur(5px); }
   .random-card { order: 7; }
   .reading-card { order: 8; }
   .social-dots, .tiny-heart { display: none; }
-  .below-stage { padding: 12px 12px 35px; }
-  .journal, .archive, .about { padding: 18px; border-radius: 25px; }
-  .articles, .lower-row { grid-template-columns: 1fr; }
-  .section-heading > span { font-size: 9px; }
+  .module-page, .home-footer { padding: 12px 12px 35px; }
+  .module-nav, .module-panel { padding: 16px; border-radius: 25px; }
+  .module-links a { padding-inline: 8px; }
+  .articles { grid-template-columns: 1fr; }
   .reader-body { padding: 26px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

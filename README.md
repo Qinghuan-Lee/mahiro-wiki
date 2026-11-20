@@ -55,6 +55,7 @@ python -m http.server 8000 --directory dist
 
 ## 代码入口
 
+- `index.html` 是首页。独立模块的内容和共用布局在 `pages/`，构建后生成 `articles.html`、`archive.html`、`projects.html` 和 `about.html`。
 - `scripts/build.py` 读取 Markdown，渲染正文并生成文章索引。
 - `js/main.js` 初始化页面功能。
 - `js/journal.js` 管理文章卡片、搜索、分类和归档。

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#eef4e9">
+  <title>$title · mahiro-wiki</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  $script
+</head>
+<body>
+<div class="module-page">
+  <a class="skip" href="#content">跳到正文</a>
+  <nav class="module-nav frosted" aria-label="主导航">
+    <a class="site-name" href="./"><span class="site-avatar">m</span>mahiro-wiki</a>
+    <div class="module-links">
+      $navigation
+    </div>
+  </nav>
+  <main class="module-panel frosted" id="content" tabindex="-1">
+    <h1>$title</h1>
+    $content
+  </main>
+  <footer><span>mahiro-wiki © 2026</span><a href="./">返回首页</a></footer>
+</div>
+$reader
+</body>
+</html>
